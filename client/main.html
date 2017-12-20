@@ -1,0 +1,104 @@
+<head>
+    <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <title>Tribal Sub Plan </title>
+    <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+  <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+    <script type="text/javascript">
+       google.load('visualization', '1', {packages: ['corechart']});
+     </script>
+</head>
+
+<body>
+  <div id="render-target"></div>
+  <script>
+  function drawVisualization() {
+     var jason =  '{"responses":{"people":241,"people-remaining":224,"families":5,"families-remaining":105,"attending":{"ceremony":{"adults":4,"children":0,"all":4},"ceremony+reception":{"adults":5,"children":4,"all":9}},"declined":{"adults":2,"children":2,"all":4}},"food":{"fish":3,"beef":1,"vegetarian":1}}'
+     var parsed = $.parseJSON(jason);
+     var arr = [["Food", "count"]];
+     console.log(parsed.food);
+     $.each(parsed.food, function(i, obj) {
+       arr.push([i.toString(), obj]);
+       console.log(i, obj);
+     });
+     var finalArr = [arr];
+     console.log(finalArr);
+     var data = google.visualization.arrayToDataTable(arr
+     );
+     new google.visualization.PieChart(document.getElementById('visualization')).
+         draw(data, {title:"So, how was your day?"});
+     new google.visualization.PieChart(document.getElementById('visualization1')).
+         draw(data, {title:"So, how was your day?"});
+     new google.visualization.PieChart(document.getElementById('visualization2')).
+         draw(data, {title:"So, how was your day?"});
+   }
+   google.setOnLoadCallback(drawVisualization);
+   function drawChart() {
+   var data = google.visualization.arrayToDataTable([
+     ["Element", "Density", { role: "style" } ],
+     ["Copper", 8.94, "#b87333"],
+     ["Silver", 10.49, "silver"],
+     ["Gold", 19.30, "gold"],
+     ["Platinum", 21.45, "color: #e5e4e2"]
+   ]);
+
+   var view = new google.visualization.DataView(data);
+   view.setColumns([0, 1,
+                    { calc: "stringify",
+                      sourceColumn: 1,
+                      type: "string",
+                      role: "annotation" },
+                    2]);
+
+   var options = {
+     title: "Density of Precious Metals, in g/cm^3",
+     width: 600,
+     height: 400,
+     bar: {groupWidth: "95%"},
+     legend: { position: "none" },
+   };
+   var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+   chart.draw(view, options);
+}
+function drawChart1() {
+      var data1 = google.visualization.arrayToDataTable([
+        ['Year', 'Sales', 'Expenses'],
+        ['2013',  1000,      400],
+        ['2014',  1170,      460],
+        ['2015',  660,       1120],
+        ['2016',  1030,      540]
+      ]);
+
+      var options1 = {
+        title: 'Company Performance',
+        hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+        vAxis: {minValue: 0}
+      };
+
+      var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+      chart.draw(data1, options1);
+    }
+     google.setOnLoadCallback(drawChart1);
+google.setOnLoadCallback(drawChart);
+
+  </script>
+</body>
